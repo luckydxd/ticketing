@@ -10,6 +10,7 @@ class UserData extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $table = 'user_datas';
     protected $fillable = [
         'user_id',
         'address',

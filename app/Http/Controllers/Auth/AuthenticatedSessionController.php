@@ -34,9 +34,21 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = $request->user();
+
+        if ($user->hasRole('admin')) {
+            // mengarahkan user yang login sebagai admin ke dashboard admin
+            return redirect()->intended('/admin/dashboard');
+        }
+
+        if ($user->hasRole('checker')) {
+            // mengarahkan user yang login sebagai checker ke dashboard checker
+            return redirect()->intended('/checker/dashboard');
+        }
+
+        // mengarahkan user yang login sebagai customer ke halaman home
         return redirect()->intended(RouteServiceProvider::HOME);
     }
-
     /**
      * Destroy an authenticated session.
      */
