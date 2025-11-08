@@ -1,6 +1,6 @@
-# ArgoTiket: Sistem Booking Tiket Bus (Tech Test)
+# TiketBis.com: Sistem Booking Tiket Bus (Tech Test)
 
-ArgoTiket adalah aplikasi web *full-stack* untuk sistem pemesanan tiket bus. Proyek ini dibuat sebagai *technical test* untuk PT Four Best Synergy, mengimplementasikan alur booking lengkap dari pemesanan oleh customer, konfirmasi admin, hingga pengecekan di hari keberangkatan.
+Aplikasi web *full-stack* untuk sistem pemesanan tiket bus. Proyek ini dibuat sebagai *technical test* untuk PT Four Best Synergy, mengimplementasikan alur booking lengkap dari pemesanan oleh customer, konfirmasi admin, hingga pengecekan di hari keberangkatan.
 
 Proyek ini dibangun menggunakan **Laravel 10** (backend), **React.js** (frontend dengan Inertia.js), dan **PostgreSQL** (database).
 
