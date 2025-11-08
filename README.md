@@ -111,3 +111,6 @@ Anda dapat menggunakan akun berikut yang telah dibuat oleh *seeder*:
 | 🕵️‍♂️ **Checker** | `checker@test.com` | `password` |
 
 ---
+
+## 💽 Rancangan Database
+<img width="3133" height="2685" alt="Image" src="https://github.com/user-attachments/assets/575b0965-7b54-4dfd-aac0-f7585a31a1af" />
