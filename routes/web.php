@@ -9,7 +9,12 @@ use App\Http\Controllers\Admin\RouteController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\BusController;
 use App\Http\Controllers\Admin\DriverController;
-
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Customer\PaymentController;
+use App\Http\Controllers\Admin\BookingConfirmationController;
+use App\Http\Controllers\Admin\SuratJalanController;
+use App\Http\Controllers\Checker\CheckerController;
+use App\Http\Controllers\Admin\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +28,7 @@ use App\Http\Controllers\Admin\DriverController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
@@ -82,6 +82,45 @@ Route::middleware('auth')->group(function () {
             Route::post('drivers', [DriverController::class, 'store'])->name('drivers.store');
             Route::put('drivers/{driver}', [DriverController::class, 'update'])->name('drivers.update');
             Route::delete('drivers/{driver}', [DriverController::class, 'destroy'])->name('drivers.destroy');
+
+            //Rute konfirmasi booking
+            Route::get('confirmations', [BookingConfirmationController::class, 'index'])->name('confirmations.index');
+            Route::patch('confirmations/{booking}', [BookingConfirmationController::class, 'update'])->name('confirmations.update');
+
+            // Rute surat jalan
+            Route::get('surat-jalan', [SuratJalanController::class, 'index'])->name('suratjalan.index');
+            Route::post('surat-jalan', [SuratJalanController::class, 'store'])->name('suratjalan.store');
+
+            // Rute laporan
+            Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+        });
+
+    Route::middleware(['role:customer'])->prefix('customer')->name('customer.')->group(function () {
+        //Rute booking
+        Route::get('/my-bookings', [BookingController::class, 'index'])->name('booking.index');
+        Route::get('/booking/create/{schedule}', [BookingController::class, 'create'])->name('booking.create');
+        Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+
+        //Rute pembayaran
+        Route::get('/payment/upload/{booking}', [PaymentController::class, 'show'])->name('payment.show');
+        Route::post('/payment/upload/{booking}', [PaymentController::class, 'store'])->name('payment.store');
+
+        //Rute invoice
+        Route::get('/invoice/{booking}', [BookingController::class, 'showInvoice'])->name('invoice.show');
+    });
+
+    Route::middleware(['role:checker'])
+        ->prefix('checker')
+        ->name('checker.')
+        ->group(function () {
+
+            Route::get('/dashboard', [CheckerController::class, 'index'])->name('dashboard');
+
+            // Halaman detail untuk mengecek penumpang per jadwal
+            Route::get('/scan/{schedule}', [CheckerController::class, 'show'])->name('scan.show');
+
+            // Aksi untuk "check-in" penumpang 
+            Route::patch('/scan/{booking}', [CheckerController::class, 'update'])->name('scan.update');
         });
 });
 

@@ -13,7 +13,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
+            <nav className="bg-white border-b border-gray-100 print:hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -30,6 +30,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+
+                                {/* Link untuk Admin */}
+
                                 {roles.includes("admin") && (
                                     <>
                                         <NavLink
@@ -65,6 +68,64 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             )}
                                         >
                                             Master Driver
+                                        </NavLink>
+                                        <NavLink
+                                            href={route(
+                                                "admin.confirmations.index"
+                                            )}
+                                            active={route().current(
+                                                "admin.confirmations.index"
+                                            )}
+                                        >
+                                            Konfirmasi Booking
+                                        </NavLink>
+                                        <NavLink
+                                            href={route(
+                                                "admin.suratjalan.index"
+                                            )}
+                                            active={route().current(
+                                                "admin.suratjalan.index"
+                                            )}
+                                        >
+                                            Surat Jalan
+                                        </NavLink>
+                                        <NavLink
+                                            href={route("admin.reports.index")}
+                                            active={route().current(
+                                                "admin.reports.index"
+                                            )}
+                                        >
+                                            Laporan
+                                        </NavLink>
+                                    </>
+                                )}
+
+                                {/* Link untuk Customer */}
+                                {roles.includes("customer") && (
+                                    <>
+                                        <NavLink
+                                            href={route(
+                                                "customer.booking.index"
+                                            )}
+                                            active={route().current(
+                                                "customer.booking.index"
+                                            )}
+                                        >
+                                            Booking Saya
+                                        </NavLink>
+                                    </>
+                                )}
+
+                                {/* Link untuk Checker */}
+                                {roles.includes("checker") && (
+                                    <>
+                                        <NavLink
+                                            href={route("checker.dashboard")}
+                                            active={route().current(
+                                                "checker.dashboard"
+                                            )}
+                                        >
+                                            Dasbor Checker
                                         </NavLink>
                                     </>
                                 )}
@@ -201,7 +262,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
+                <header className="bg-white shadow print:hidden">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {header}
                     </div>
